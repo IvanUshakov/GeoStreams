@@ -20,11 +20,11 @@
 		2AB00AA9158CAF0600951B15 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2AB00AAB158CAF0600951B15 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2AB00AAD158CAF0600951B15 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		2AB00AB1158CAF0600951B15 /* geosocial-Info.plist */ = {isa = PBXFileReference; path = "geosocial-Info.plist"; sourceTree = "<group>"; };
+		2AB00AB1158CAF0600951B15 /* geosocial-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "geosocial-Info.plist"; sourceTree = "<group>"; };
 		2AB00AB3158CAF0600951B15 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2AB00AB5158CAF0600951B15 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2AB00AB7158CAF0600951B15 /* geosocial-Prefix.pch */ = {isa = PBXFileReference; path = "geosocial-Prefix.pch"; sourceTree = "<group>"; };
-		2AB00AB8158CAF0600951B15 /* GSAppDelegate.h */ = {isa = PBXFileReference; path = GSAppDelegate.h; sourceTree = "<group>"; };
+		2AB00AB7158CAF0600951B15 /* geosocial-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "geosocial-Prefix.pch"; sourceTree = "<group>"; };
+		2AB00AB8158CAF0600951B15 /* GSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GSAppDelegate.h; sourceTree = "<group>"; };
 		2AB00AB9158CAF0600951B15 /* GSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GSAppDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
