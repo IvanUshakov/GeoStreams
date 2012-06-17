@@ -41,12 +41,10 @@
         self.backgroundView.layer.shadowColor = [[UIColor colorWithWhite:0.0f alpha:1.0f] CGColor];
         self.backgroundView.layer.shadowOffset = CGSizeMake(2, 2);
         self.backgroundView.layer.shadowOpacity = 0.5;
-        //self.backgroundView.layer.cornerRadius = 6.0f;
         
         //title
         self.avatar = [[[UIImageView alloc] init] autorelease];
-        //self.avatar.layer.cornerRadius = 6.0f;
-        //self.avatar.layer.masksToBounds = YES;
+        [self.avatar setFrame:CGRectMake(5.0f, 10.0f, 40.0f, 40.0f)];
         [self.contentView addSubview:self.avatar];
         
         self.author = [[[UILabel alloc] init] autorelease];
@@ -59,6 +57,7 @@
         self.date.backgroundColor = [UIColor clearColor];
         self.date.textAlignment = UITextAlignmentRight;
         self.date.textColor = [UIColor grayColor];
+        [self.date setFrame:CGRectMake(self.bounds.size.width - 110.0f, 10.0f, 100.0f, 12.0f)];
         [self.contentView addSubview:self.date];
         
         self.via = [[[UILabel alloc] init] autorelease];
@@ -99,8 +98,6 @@
     else {
         self.imageView.hidden = YES;
     }
-    [self.avatar setFrame:CGRectMake(5.0f, 10.0f, 40.0f, 40.0f)];
-    [self.date setFrame:CGRectMake(self.bounds.size.width - 110.0f, 10.0f, 100.0f, 12.0f)];
     CGSize authorSize = [self.item.fromUser sizeWithFont:self.author.font 
                                      constrainedToSize:CGSizeMake(265.0f,100.0f) 
                                          lineBreakMode:self.author.lineBreakMode];
@@ -121,7 +118,9 @@
         [_item release];
         _item = [item retain];
         self.media = [_item.media anyObject];
-        [self.imageView setImageWithURL:[NSURL URLWithString:self.media.url] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+        if (self.media && [self.media.type isEqualToString:@"photo"]) {
+            [self.imageView setImageWithURL:[NSURL URLWithString:self.media.url] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+        }
         [self.avatar setImageWithURL:[NSURL URLWithString:_item.profileImageUrl] placeholderImage:[UIImage imageNamed:@"placeholde.png"]];
         self.author.text = _item.fromUser;
         self.text.text = _item.text;
@@ -140,11 +139,8 @@
     CGFloat size = textSize.height + 12.0f < 40.0f ? 40.0f : textSize.height + 12.0f;
     size += 20.0f;
     Media *media = [item.media anyObject];
-    if (media) {
-        float height = [media.height floatValue];
-        float width = [media.width floatValue];
-        float rate = 310.0f / width;
-        size += height * rate + 10.0f;
+    if (media && [media.type isEqualToString:@"photo"]) {
+        size += 320.0f;
     }
     return size;
 }

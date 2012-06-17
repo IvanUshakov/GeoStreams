@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A193E51158D6BB700532263 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A193E50158D6BB700532263 /* CoreLocation.framework */; };
+		2A193E54158D6DBE00532263 /* SVPullToRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2A193E53158D6DBE00532263 /* SVPullToRefresh.bundle */; };
 		2AB00AAA158CAF0600951B15 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB00AA9158CAF0600951B15 /* UIKit.framework */; };
 		2AB00AAC158CAF0600951B15 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB00AAB158CAF0600951B15 /* Foundation.framework */; };
 		2AB00AAE158CAF0600951B15 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB00AAD158CAF0600951B15 /* CoreGraphics.framework */; };
@@ -25,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A193E50158D6BB700532263 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		2A193E53158D6DBE00532263 /* SVPullToRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVPullToRefresh.bundle; sourceTree = "<group>"; };
 		2AB00AA5158CAF0600951B15 /* geosocial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = geosocial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AB00AA9158CAF0600951B15 /* UIKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2AB00AAB158CAF0600951B15 /* Foundation.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -57,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A193E51158D6BB700532263 /* CoreLocation.framework in Frameworks */,
 				2AB00AAA158CAF0600951B15 /* UIKit.framework in Frameworks */,
 				2AB00AAC158CAF0600951B15 /* Foundation.framework in Frameworks */,
 				2AB00AAE158CAF0600951B15 /* CoreGraphics.framework in Frameworks */,
@@ -70,6 +75,7 @@
 		2AB00A9A158CAF0600951B15 = {
 			isa = PBXGroup;
 			children = (
+				2A193E50158D6BB700532263 /* CoreLocation.framework */,
 				2AB00AAF158CAF0600951B15 /* geosocial */,
 				2AB00AA8158CAF0600951B15 /* Frameworks */,
 				2AB00AA6158CAF0600951B15 /* Products */,
@@ -155,6 +161,7 @@
 		2AB00AFC158CD75400951B15 /* Res */ = {
 			isa = PBXGroup;
 			children = (
+				2A193E53158D6DBE00532263 /* SVPullToRefresh.bundle */,
 				2AB00B00158CD9A300951B15 /* bg.png */,
 				2AB00AFE158CD76F00951B15 /* placeholder.png */,
 				2AB00B3F158D3C6600951B15 /* ItemModel.xcdatamodeld */,
@@ -218,6 +225,7 @@
 				2AB00AB4158CAF0600951B15 /* InfoPlist.strings in Resources */,
 				2AB00AFF158CD76F00951B15 /* placeholder.png in Resources */,
 				2AB00B01158CD9A300951B15 /* bg.png in Resources */,
+				2A193E54158D6DBE00532263 /* SVPullToRefresh.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
