@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2A193E51158D6BB700532263 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A193E50158D6BB700532263 /* CoreLocation.framework */; };
 		2A193E54158D6DBE00532263 /* SVPullToRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2A193E53158D6DBE00532263 /* SVPullToRefresh.bundle */; };
+		2A193E57158D6F5000532263 /* GSTableVIewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A193E56158D6F5000532263 /* GSTableVIewCellView.m */; };
 		2AB00AAA158CAF0600951B15 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB00AA9158CAF0600951B15 /* UIKit.framework */; };
 		2AB00AAC158CAF0600951B15 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB00AAB158CAF0600951B15 /* Foundation.framework */; };
 		2AB00AAE158CAF0600951B15 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB00AAD158CAF0600951B15 /* CoreGraphics.framework */; };
@@ -29,6 +30,8 @@
 /* Begin PBXFileReference section */
 		2A193E50158D6BB700532263 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2A193E53158D6DBE00532263 /* SVPullToRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVPullToRefresh.bundle; sourceTree = "<group>"; };
+		2A193E55158D6F5000532263 /* GSTableVIewCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSTableVIewCellView.h; sourceTree = "<group>"; };
+		2A193E56158D6F5000532263 /* GSTableVIewCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSTableVIewCellView.m; sourceTree = "<group>"; };
 		2AB00AA5158CAF0600951B15 /* geosocial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = geosocial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AB00AA9158CAF0600951B15 /* UIKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2AB00AAB158CAF0600951B15 /* Foundation.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -154,6 +157,8 @@
 			children = (
 				2AB00B09158CF0E300951B15 /* GSItemTableVIewCell.h */,
 				2AB00B0A158CF0E300951B15 /* GSItemTableVIewCell.m */,
+				2A193E55158D6F5000532263 /* GSTableVIewCellView.h */,
+				2A193E56158D6F5000532263 /* GSTableVIewCellView.m */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -261,6 +266,7 @@
 				2AB00B41158D3C6600951B15 /* ItemModel.xcdatamodeld in Sources */,
 				2AB00B4E158D3EEE00951B15 /* Media.m in Sources */,
 				2AB00B57158D43CF00951B15 /* Items.m in Sources */,
+				2A193E57158D6F5000532263 /* GSTableVIewCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

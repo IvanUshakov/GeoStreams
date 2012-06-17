@@ -14,11 +14,14 @@
 @interface GSViewController ()
 @property (nonatomic, retain) GSItemModel *itemModel;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, retain) Items *selectedItem;
+- (void)pinchImageHandler:(UIPinchGestureRecognizer*)recognizer;
 @end
 
 @implementation GSViewController
 @synthesize itemModel = _itemModel;
 @synthesize fetchedResultsController = _fetchedResultsController;
+@synthesize selectedItem = _selectedItem;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -39,13 +42,13 @@
 - (void)dealloc
 {
     [_itemModel release];
+    [_selectedItem release];
     [super dealloc];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.itemModel loadItems];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(itemsDidLoad)
                                                  name:GS_ITEM_MODEL_FINISH_LOAD_ITEMS
@@ -62,6 +65,12 @@
 {
     [super viewDidLoad];
     [self.fetchedResultsController performFetch:nil];
+    [self.tableView.pullToRefreshView triggerRefresh];
+    [NSTimer scheduledTimerWithTimeInterval:30.0f
+                                     target:self.tableView.pullToRefreshView
+                                   selector:@selector(triggerRefresh)
+                                   userInfo:nil 
+                                    repeats:YES];
 }
 
 - (void)viewDidUnload
@@ -95,6 +104,12 @@
         cell = [[[GSItemTableVIewCell alloc] initWithStyle:UITableViewCellStyleDefault 
                                            reuseIdentifier:GSItemTableVIewCellIdentifier] autorelease];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        UIPinchGestureRecognizer *pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self
+                                                                                                     action:@selector(pinchImageHandler:)];
+        
+        [cell.imageView addGestureRecognizer:pinchGestureRecognizer];
+        [pinchGestureRecognizer release];
     }
     cell.item = [self.fetchedResultsController objectAtIndexPath:indexPath];
     return cell;
@@ -109,7 +124,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    self.selectedItem = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    if ([self.selectedItem.media count] > 0) {
+        MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+        browser.displayActionButton = YES;
+        UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:browser];
+        nc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        [self presentModalViewController:nc animated:YES];
+        [nc release];
+    }
 }
 
 #pragma mark - fetchedResultsControllerDelegate
@@ -172,6 +195,13 @@
     [self.tableView.pullToRefreshView stopAnimating];
 }
 
+- (void)pinchImageHandler:(UIPinchGestureRecognizer*)recognizer
+{
+    if (recognizer.scale > 0.5) {
+        
+    }
+}
+
 #pragma mark - properties
 
 - (NSFetchedResultsController *)fetchedResultsController
@@ -187,6 +217,20 @@
     _fetchedResultsController.delegate = self;
     
     return _fetchedResultsController;
+}
+
+#pragma mark - MWPhotoBrowserDelegate
+
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return [self.selectedItem.media count];
+}
+
+- (MWPhoto *)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < [self.selectedItem.media count]) {
+        NSArray *images = [self.selectedItem.media allObjects];
+        return [MWPhoto photoWithURL:[NSURL URLWithString:[[images objectAtIndex:index] url]]];
+    }
+    return nil;
 }
 
 @end

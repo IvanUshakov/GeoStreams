@@ -11,24 +11,19 @@
 #import <QuartzCore/QuartzCore.h>
 #import <NSDate-TimeDifference/NSDate+TimeDifference.h>
 #import "Media.h"
+#import "GSTableVIewCellView.h"
 
 @interface GSItemTableVIewCell ()
 @property (nonatomic, retain) UIImageView *avatar;
-@property (nonatomic, retain) UILabel *author;
-@property (nonatomic, retain) UILabel *text;
-@property (nonatomic, retain) UILabel *date;
-@property (nonatomic, retain) UILabel *via;
 @property (nonatomic, retain) Media *media;
+@property (nonatomic, retain) GSTableVIewCellView *cellView;
 @end
 
 @implementation GSItemTableVIewCell
 @synthesize avatar = _avatar;
-@synthesize author = _author;
-@synthesize text = _text;
 @synthesize item = _item;
-@synthesize date = _date;
-@synthesize via = _via;
 @synthesize media = _media;
+@synthesize cellView = _cellView;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -44,33 +39,11 @@
         
         //title
         self.avatar = [[[UIImageView alloc] init] autorelease];
-        [self.avatar setFrame:CGRectMake(5.0f, 10.0f, 40.0f, 40.0f)];
+        [self.avatar setFrame:CGRectMake(5.0f, 5.0f, 40.0f, 40.0f)];
         [self.contentView addSubview:self.avatar];
         
-        self.author = [[[UILabel alloc] init] autorelease];
-        self.author.font = [UIFont boldSystemFontOfSize:12.0f];
-        self.author.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:self.author];
-        
-        self.date = [[[UILabel alloc] init] autorelease];
-        self.date.font = [UIFont systemFontOfSize:12.0f];
-        self.date.backgroundColor = [UIColor clearColor];
-        self.date.textAlignment = UITextAlignmentRight;
-        self.date.textColor = [UIColor grayColor];
-        [self.date setFrame:CGRectMake(self.bounds.size.width - 110.0f, 10.0f, 100.0f, 12.0f)];
-        [self.contentView addSubview:self.date];
-        
-        self.via = [[[UILabel alloc] init] autorelease];
-        self.via.font = [UIFont systemFontOfSize:12.0f];
-        self.via.backgroundColor = [UIColor clearColor];
-        self.via.textColor = [UIColor grayColor];
-        [self.contentView addSubview:self.via];
-
-        self.text = [[[UILabel alloc] init] autorelease];
-        self.text.numberOfLines = 0;
-        self.text.font = [UIFont systemFontOfSize:12.0f];
-        self.text.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:self.text];
+        self.cellView = [[GSTableVIewCellView alloc] init];
+        [self.contentView addSubview:self.cellView];
     }
     return self;
 }
@@ -78,12 +51,9 @@
 - (void)dealloc
 {
     [_avatar release];
-    [_author release];
-    [_text release];
     [_item release];
-    [_date release];
-    [_via release];
     [_media release];
+    [_cellView release];
     [super dealloc];
 }
 
@@ -91,23 +61,15 @@
 {
     [super layoutSubviews];
     self.backgroundView.frame = CGRectMake(0, 5.0f, self.bounds.size.width, self.bounds.size.height - 10.0f);
+    self.contentView.frame = self.backgroundView.frame;
     if (self.media) {
         self.imageView.hidden = NO;
-        [self.imageView setFrame:CGRectMake(5.0f, self.bounds.size.height - 320.0f, 310.0f, 310.0f)];
+        [self.imageView setFrame:CGRectMake(5.0f, self.bounds.size.height - 325.0f, 310.0f, 310.0f)];
     }
     else {
         self.imageView.hidden = YES;
     }
-    CGSize authorSize = [self.item.fromUser sizeWithFont:self.author.font 
-                                     constrainedToSize:CGSizeMake(265.0f,100.0f) 
-                                         lineBreakMode:self.author.lineBreakMode];
-    [self.author setFrame:CGRectMake(50.0f, 10.0f, authorSize.width, 12.0f)]; 
-    [self.via setFrame:CGRectMake(55.0f + authorSize.width, 10.0f, 100.0f, 12.0f)];
-    
-    CGSize textSize = [self.item.text sizeWithFont:self.text.font 
-                                          constrainedToSize:CGSizeMake(265.0f,100.0f) 
-                                              lineBreakMode:self.text.lineBreakMode]; 
-    [self.text setFrame:CGRectMake(50.0f, 22.0f, textSize.width, textSize.height)];
+    self.cellView.frame = self.contentView.bounds;
 }
 
 #pragma mark - properties
@@ -119,13 +81,10 @@
         _item = [item retain];
         self.media = [_item.media anyObject];
         if (self.media && [self.media.type isEqualToString:@"photo"]) {
-            [self.imageView setImageWithURL:[NSURL URLWithString:self.media.url] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+            [self.imageView setImageWithURL:[NSURL URLWithString:self.media.url]];
         }
-        [self.avatar setImageWithURL:[NSURL URLWithString:_item.profileImageUrl] placeholderImage:[UIImage imageNamed:@"placeholde.png"]];
-        self.author.text = _item.fromUser;
-        self.text.text = _item.text;
-        self.date.text = [_item.createdAt stringWithTimeDifference];
-        self.via.text = [NSString stringWithFormat:@"via %@", _item.sourceType];
+        [self.avatar setImageWithURL:[NSURL URLWithString:_item.profileImageUrl]];
+        _cellView.item = _item;
     }
 }
 
@@ -133,14 +92,14 @@
 
 + (CGFloat)heightForCellWithItem:(Items*)item
 {
-    CGSize textSize = [item.text sizeWithFont:[UIFont systemFontOfSize:12.0f]
+    CGSize textSize = [item.text sizeWithFont:[UIFont systemFontOfSize:12.0f] 
                             constrainedToSize:CGSizeMake(265.0f,100.0f) 
                                 lineBreakMode:UILineBreakModeWordWrap]; 
-    CGFloat size = textSize.height + 12.0f < 40.0f ? 40.0f : textSize.height + 12.0f;
-    size += 20.0f;
+    CGFloat size = textSize.height + 5.0f < 30.0f ? 30.0f : textSize.height + 5.0f;
+    size += 30.0f;
     Media *media = [item.media anyObject];
     if (media && [media.type isEqualToString:@"photo"]) {
-        size += 320.0f;
+        size += 315.0f;
     }
     return size;
 }

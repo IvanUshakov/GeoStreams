@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MWPhotoBrowser/MWPhotoBrowser.h>
 
-@interface GSViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface GSViewController : UITableViewController <NSFetchedResultsControllerDelegate, MWPhotoBrowserDelegate>
 @end
