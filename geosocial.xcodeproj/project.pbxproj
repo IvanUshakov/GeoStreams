@@ -15,10 +15,12 @@
 		2AB00ABA158CAF0600951B15 /* GSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AB00AB9158CAF0600951B15 /* GSAppDelegate.m */; };
 		2AB00AC9158CB26B00951B15 /* GSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AB00AC8158CB26B00951B15 /* GSViewController.m */; };
 		2AB00AD0158CB90600951B15 /* GSItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AB00ACF158CB90600951B15 /* GSItemModel.m */; };
-		2AB00AD3158CB92200951B15 /* GSItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AB00AD2158CB92200951B15 /* GSItem.m */; };
 		2AB00AFF158CD76F00951B15 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AB00AFE158CD76F00951B15 /* placeholder.png */; };
 		2AB00B01158CD9A300951B15 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AB00B00158CD9A300951B15 /* bg.png */; };
 		2AB00B0B158CF0E300951B15 /* GSItemTableVIewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AB00B0A158CF0E300951B15 /* GSItemTableVIewCell.m */; };
+		2AB00B41158D3C6600951B15 /* ItemModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2AB00B3F158D3C6600951B15 /* ItemModel.xcdatamodeld */; };
+		2AB00B4E158D3EEE00951B15 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AB00B4D158D3EEE00951B15 /* Media.m */; };
+		2AB00B57158D43CF00951B15 /* Items.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AB00B56158D43CE00951B15 /* Items.m */; };
 		80B6BA3436234275AF73FFD0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B139EA9BD854872A49AEA38 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -37,12 +39,15 @@
 		2AB00AC8158CB26B00951B15 /* GSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSViewController.m; sourceTree = "<group>"; };
 		2AB00ACE158CB90600951B15 /* GSItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSItemModel.h; sourceTree = "<group>"; };
 		2AB00ACF158CB90600951B15 /* GSItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSItemModel.m; sourceTree = "<group>"; };
-		2AB00AD1158CB92200951B15 /* GSItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSItem.h; sourceTree = "<group>"; };
-		2AB00AD2158CB92200951B15 /* GSItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSItem.m; sourceTree = "<group>"; };
 		2AB00AFE158CD76F00951B15 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 		2AB00B00158CD9A300951B15 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		2AB00B09158CF0E300951B15 /* GSItemTableVIewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSItemTableVIewCell.h; sourceTree = "<group>"; };
 		2AB00B0A158CF0E300951B15 /* GSItemTableVIewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSItemTableVIewCell.m; sourceTree = "<group>"; };
+		2AB00B40158D3C6600951B15 /* ItemModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ItemModel.xcdatamodel; sourceTree = "<group>"; };
+		2AB00B4C158D3EEE00951B15 /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Media.h; sourceTree = "<group>"; };
+		2AB00B4D158D3EEE00951B15 /* Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Media.m; sourceTree = "<group>"; };
+		2AB00B55158D43CE00951B15 /* Items.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Items.h; sourceTree = "<group>"; };
+		2AB00B56158D43CE00951B15 /* Items.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Items.m; sourceTree = "<group>"; };
 		7B139EA9BD854872A49AEA38 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E61DCCD937194942821CE5D8 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -130,8 +135,10 @@
 			children = (
 				2AB00ACE158CB90600951B15 /* GSItemModel.h */,
 				2AB00ACF158CB90600951B15 /* GSItemModel.m */,
-				2AB00AD1158CB92200951B15 /* GSItem.h */,
-				2AB00AD2158CB92200951B15 /* GSItem.m */,
+				2AB00B4C158D3EEE00951B15 /* Media.h */,
+				2AB00B4D158D3EEE00951B15 /* Media.m */,
+				2AB00B55158D43CE00951B15 /* Items.h */,
+				2AB00B56158D43CE00951B15 /* Items.m */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -150,6 +157,7 @@
 			children = (
 				2AB00B00158CD9A300951B15 /* bg.png */,
 				2AB00AFE158CD76F00951B15 /* placeholder.png */,
+				2AB00B3F158D3C6600951B15 /* ItemModel.xcdatamodeld */,
 			);
 			name = Res;
 			sourceTree = "<group>";
@@ -241,8 +249,10 @@
 				2AB00ABA158CAF0600951B15 /* GSAppDelegate.m in Sources */,
 				2AB00AC9158CB26B00951B15 /* GSViewController.m in Sources */,
 				2AB00AD0158CB90600951B15 /* GSItemModel.m in Sources */,
-				2AB00AD3158CB92200951B15 /* GSItem.m in Sources */,
 				2AB00B0B158CF0E300951B15 /* GSItemTableVIewCell.m in Sources */,
+				2AB00B41158D3C6600951B15 /* ItemModel.xcdatamodeld in Sources */,
+				2AB00B4E158D3EEE00951B15 /* Media.m in Sources */,
+				2AB00B57158D43CF00951B15 /* Items.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +363,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		2AB00B3F158D3C6600951B15 /* ItemModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2AB00B40158D3C6600951B15 /* ItemModel.xcdatamodel */,
+			);
+			currentVersion = 2AB00B40158D3C6600951B15 /* ItemModel.xcdatamodel */;
+			path = ItemModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 2AB00A9C158CAF0600951B15 /* Project object */;
 }

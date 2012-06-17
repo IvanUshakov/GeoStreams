@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GSItemModel : NSObject
+#define GS_ITEM_MODEL_FINISH_LOAD_ITEMS @"GS_ITEM_MODEL_FINISH_LOAD_ITEMS"
 
+@interface GSItemModel : NSObject
+- (void)loadItems;
 @end

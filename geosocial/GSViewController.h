@@ -7,10 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GSItem.h"
 
-@interface GSViewController : UITableViewController {
-    GSItem *_item; 
-}
-
+@interface GSViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 @end

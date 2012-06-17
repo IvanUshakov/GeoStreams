@@ -6,31 +6,29 @@
 //  Copyright (c) 2012 ООО Скрипт. All rights reserved.
 //
 
-#import <ISO8601DateFormatter/ISO8601DateFormatter.h>
+#import <SVPullToRefresh/SVPullToRefresh.h>
 #import "GSViewController.h"
 #import "GSItemTableVIewCell.h"
+#import "GSItemModel.h"
 
 @interface GSViewController ()
-
+@property (nonatomic, retain) GSItemModel *itemModel;
+@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @end
 
 @implementation GSViewController
+@synthesize itemModel = _itemModel;
+@synthesize fetchedResultsController = _fetchedResultsController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        _item = [[[GSItem alloc] init] autorelease];
-        _item.imageURL = [NSURL URLWithString:@"http://distilleryimage3.instagram.com/76c55116b7ad11e18bb812313804a181_7.jpg"];
-        _item.text = @"drawing shadows is expensive operation, so for example if your application allows other interface orientation and you start to rotate the de";
-        _item.avatarURl = [NSURL URLWithString:@"https://si0.twimg.com/profile_images/2058587904/170_normal.png"];
-        _item.author = @"ULmolot";
+        self.itemModel = [[[GSItemModel alloc] init] autorelease];
         
-        ISO8601DateFormatter *dateFormator = [[ISO8601DateFormatter alloc] init];
-        _item.date = [dateFormator dateFromString:@"Sat, 16 Jun 2012 16:30:36 +0000"];
-        [dateFormator release];
-        
-        _item.via = @"Twitter";
+        [self.tableView addPullToRefreshWithActionHandler:^(void){
+            [self.itemModel loadItems];
+        }];
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.tableView.backgroundColor = [UIColor clearColor];
@@ -38,14 +36,38 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_itemModel release];
+    [super dealloc];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.itemModel loadItems];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(itemsDidLoad)
+                                                 name:GS_ITEM_MODEL_FINISH_LOAD_ITEMS
+                                               object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.fetchedResultsController performFetch:nil];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    self.fetchedResultsController = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -62,7 +84,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -74,7 +96,7 @@
                                            reuseIdentifier:GSItemTableVIewCellIdentifier] autorelease];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    cell.item = _item;
+    cell.item = [self.fetchedResultsController objectAtIndexPath:indexPath];
     return cell;
 }
 
@@ -82,12 +104,89 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 400.0f;
+    return [GSItemTableVIewCell heightForCellWithItem:[self.fetchedResultsController objectAtIndexPath:indexPath]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
+}
+
+#pragma mark - fetchedResultsControllerDelegate
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller 
+{
+    [self.tableView beginUpdates];
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView endUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller 
+   didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath 
+     forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath 
+{
+    UITableView *tableView = self.tableView;
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        case NSFetchedResultsChangeUpdate:
+            [(GSItemTableVIewCell*)[tableView cellForRowAtIndexPath:indexPath] setItem: [self.fetchedResultsController objectAtIndexPath:indexPath]];
+            break;
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller 
+  didChangeSection:(id )sectionInfo 
+           atIndex:(NSUInteger)sectionIndex 
+     forChangeType:(NSFetchedResultsChangeType)type 
+{
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+#pragma mark - privat
+
+- (void)itemsDidLoad
+{
+    [self.tableView.pullToRefreshView stopAnimating];
+}
+
+#pragma mark - properties
+
+- (NSFetchedResultsController *)fetchedResultsController
+{
+    
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+    self.fetchedResultsController = [[[NSFetchedResultsController alloc] initWithFetchRequest:[Items requestAllSortedBy:@"createdAt" ascending:NO]
+                                                                         managedObjectContext:[NSManagedObjectContext defaultContext]
+                                                                           sectionNameKeyPath:nil
+                                                                                    cacheName:@"Root"] autorelease];
+    _fetchedResultsController.delegate = self;
+    
+    return _fetchedResultsController;
 }
 
 @end

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GSItem.h"
+#import "Items.h"
 
 @interface GSItemTableVIewCell : UITableViewCell
-@property (nonatomic, retain) GSItem *item;
+@property (nonatomic, retain) Items *item;
++ (CGFloat)heightForCellWithItem:(Items*)item;
 @end

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11E53" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Items" representedClassName="Items" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="fromUser" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fromUserId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fromUserName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemId" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="profileImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sourceType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="media" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Media" inverseName="item" inverseEntity="Media" syncable="YES"/>
+    </entity>
+    <entity name="Media" representedClassName="Media" syncable="YES">
+        <attribute name="height" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="width" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="item" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Items" inverseName="media" inverseEntity="Items" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Items" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="Media" positionX="-423" positionY="-99" width="128" height="120"/>
+    </elements>
+</model>

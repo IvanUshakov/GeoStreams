@@ -10,6 +10,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import <QuartzCore/QuartzCore.h>
 #import <NSDate-TimeDifference/NSDate+TimeDifference.h>
+#import "Media.h"
 
 @interface GSItemTableVIewCell ()
 @property (nonatomic, retain) UIImageView *avatar;
@@ -17,6 +18,7 @@
 @property (nonatomic, retain) UILabel *text;
 @property (nonatomic, retain) UILabel *date;
 @property (nonatomic, retain) UILabel *via;
+@property (nonatomic, retain) Media *media;
 @end
 
 @implementation GSItemTableVIewCell
@@ -26,6 +28,7 @@
 @synthesize item = _item;
 @synthesize date = _date;
 @synthesize via = _via;
+@synthesize media = _media;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -65,7 +68,7 @@
         [self.contentView addSubview:self.via];
 
         self.text = [[[UILabel alloc] init] autorelease];
-        self.text.numberOfLines = 3;
+        self.text.numberOfLines = 0;
         self.text.font = [UIFont systemFontOfSize:12.0f];
         self.text.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:self.text];
@@ -81,6 +84,7 @@
     [_item release];
     [_date release];
     [_via release];
+    [_media release];
     [super dealloc];
 }
 
@@ -88,14 +92,20 @@
 {
     [super layoutSubviews];
     self.backgroundView.frame = CGRectMake(0, 5.0f, self.bounds.size.width, self.bounds.size.height - 10.0f);
-    [self.imageView setFrame:CGRectMake(5.0f, self.bounds.size.height - 320.0f, 310.0f, 310.0f)];
+    if (self.media) {
+        self.imageView.hidden = NO;
+        [self.imageView setFrame:CGRectMake(5.0f, self.bounds.size.height - 320.0f, 310.0f, 310.0f)];
+    }
+    else {
+        self.imageView.hidden = YES;
+    }
     [self.avatar setFrame:CGRectMake(5.0f, 10.0f, 40.0f, 40.0f)];
     [self.date setFrame:CGRectMake(self.bounds.size.width - 110.0f, 10.0f, 100.0f, 12.0f)];
-    CGSize authorSize = [self.item.author sizeWithFont:self.author.font 
+    CGSize authorSize = [self.item.fromUser sizeWithFont:self.author.font 
                                      constrainedToSize:CGSizeMake(265.0f,100.0f) 
                                          lineBreakMode:self.author.lineBreakMode];
     [self.author setFrame:CGRectMake(50.0f, 10.0f, authorSize.width, 12.0f)]; 
-    [self.via setFrame:CGRectMake(55.0f + authorSize.width, 10.0f, 60.0f, 12.0f)];
+    [self.via setFrame:CGRectMake(55.0f + authorSize.width, 10.0f, 100.0f, 12.0f)];
     
     CGSize textSize = [self.item.text sizeWithFont:self.text.font 
                                           constrainedToSize:CGSizeMake(265.0f,100.0f) 
@@ -105,17 +115,37 @@
 
 #pragma mark - properties
 
-- (void)setItem:(GSItem *)item
+- (void)setItem:(Items *)item
 {
     if (item != _item) {
         [_item release];
         _item = [item retain];
-        [self.imageView setImageWithURL:_item.imageURL placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
-        [self.avatar setImageWithURL:_item.avatarURl placeholderImage:[UIImage imageNamed:@"placeholde.png"]];
-        self.author.text = _item.author;
+        self.media = [_item.media anyObject];
+        [self.imageView setImageWithURL:[NSURL URLWithString:self.media.url] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+        [self.avatar setImageWithURL:[NSURL URLWithString:_item.profileImageUrl] placeholderImage:[UIImage imageNamed:@"placeholde.png"]];
+        self.author.text = _item.fromUser;
         self.text.text = _item.text;
-        self.date.text = [_item.date stringWithTimeDifference];
-        self.via.text = [NSString stringWithFormat:@"via %@", _item.via];
+        self.date.text = [_item.createdAt stringWithTimeDifference];
+        self.via.text = [NSString stringWithFormat:@"via %@", _item.sourceType];
     }
+}
+
+#pragma mark - static
+
++ (CGFloat)heightForCellWithItem:(Items*)item
+{
+    CGSize textSize = [item.text sizeWithFont:[UIFont systemFontOfSize:12.0f]
+                            constrainedToSize:CGSizeMake(265.0f,100.0f) 
+                                lineBreakMode:UILineBreakModeWordWrap]; 
+    CGFloat size = textSize.height + 12.0f < 40.0f ? 40.0f : textSize.height + 12.0f;
+    size += 20.0f;
+    Media *media = [item.media anyObject];
+    if (media) {
+        float height = [media.height floatValue];
+        float width = [media.width floatValue];
+        float rate = 310.0f / width;
+        size += height * rate + 10.0f;
+    }
+    return size;
 }
 @end
